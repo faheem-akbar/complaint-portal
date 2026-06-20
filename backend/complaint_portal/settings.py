@@ -172,10 +172,9 @@ CORS_ALLOWED_ORIGINS = config(
 )
 
 CORS_ALLOW_CREDENTIALS = False
-# Default True so registration/login works immediately after deploy.
-# Set CORS_ALLOW_ALL_ORIGINS=False in Railway Variables once you know your Netlify URL,
-# and set CORS_ALLOWED_ORIGINS to your exact Netlify URL instead.
-CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=True, cast=bool)
+# Allow all origins — safe for a university internal portal.
+# Hardcoded so Railway env vars cannot accidentally override this.
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
