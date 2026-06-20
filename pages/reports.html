@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - University Complaint Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt"></i>
+            <div><h3>ComplaintPortal</h3><span>Admin Panel</span></div>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">AD</div>
+            <div class="sidebar-user-info">
+                <h4>Admin User</h4>
+                <span>Administrator</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Main</div>
+            <a href="admin-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="admin-complaints.html"><i class="fas fa-list"></i><span>All Complaints</span><span class="badge-sidebar">8</span></a>
+            <a href="reports.html" class="active"><i class="fas fa-chart-bar"></i><span>Reports</span></a>
+            <div class="nav-section">Management</div>
+            <a href="#"><i class="fas fa-users"></i><span>Manage Students</span></a>
+            <a href="#"><i class="fas fa-bell"></i><span>Notifications</span></a>
+            <a href="#"><i class="fas fa-cog"></i><span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <div class="top-header">
+            <h1>Reports & Statistics</h1>
+            <div class="top-header-right">
+                <button class="btn btn-primary btn-sm" id="downloadReportBtn"><i class="fas fa-download"></i> Download Report</button>
+            </div>
+        </div>
+
+        <!-- Date Filter -->
+        <div class="report-filters">
+            <label style="font-weight:600; color:var(--text-primary);">Filter by Date:</label>
+            <input type="date" value="2024-11-01">
+            <input type="date" value="2024-12-31">
+            <button class="btn btn-primary btn-sm"><i class="fas fa-filter"></i> Apply</button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-cards" style="margin-bottom:24px;">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-file-alt"></i></div>
+                <div class="stat-info">
+                    <h3>8</h3>
+                    <p>Total Complaints</p>
+                    <span class="stat-change up"><i class="fas fa-arrow-up"></i> 12% from last month</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3>3</h3>
+                    <p>Resolved</p>
+                    <span class="stat-change up"><i class="fas fa-arrow-up"></i> 5% from last month</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <h3>3</h3>
+                    <p>Pending</p>
+                    <span class="stat-change down"><i class="fas fa-arrow-down"></i> 8% from last month</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-info">
+                    <h3>95%</h3>
+                    <p>Satisfaction Rate</p>
+                    <span class="stat-change up"><i class="fas fa-arrow-up"></i> 2% from last month</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="dashboard-grid">
+            <!-- Category Chart -->
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <h3><i class="fas fa-chart-pie" style="margin-right:8px; color:var(--primary-light);"></i> Complaints by Category</h3>
+                </div>
+                <div class="dashboard-card-body" id="categoryChart">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Resolution Time -->
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <h3><i class="fas fa-clock" style="margin-right:8px; color:var(--warning);"></i> Average Resolution Time</h3>
+                </div>
+                <div class="dashboard-card-body" style="padding:20px;">
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:250px;">
+                        <div style="width:180px; height:180px; border-radius:50%; background:conic-gradient(var(--success) 0deg 180deg, var(--warning) 180deg 300deg, var(--danger) 300deg 360deg); display:flex; align-items:center; justify-content:center;">
+                            <div style="width:130px; height:130px; border-radius:50%; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                                <span style="font-size:2rem; font-weight:700; color:var(--primary);">48h</span>
+                                <span style="font-size:0.8rem; color:var(--text-secondary);">Avg. Time</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:20px; margin-top:16px; font-size:0.8rem;">
+                            <span><span style="color:var(--success);">●</span> Under 24h (50%)</span>
+                            <span><span style="color:var(--warning);">●</span> 24-72h (33%)</span>
+                            <span><span style="color:var(--danger);">●</span> Over 72h (17%)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Trends -->
+        <div class="dashboard-card" style="margin-top:24px;">
+            <div class="dashboard-card-header">
+                <h3><i class="fas fa-chart-line" style="margin-right:8px; color:var(--success);"></i> Monthly Complaint Trends</h3>
+            </div>
+            <div class="dashboard-card-body" style="padding:24px;">
+                <div style="display:flex; gap:16px; align-items:flex-end; height:200px; padding:0 10px;">
+                    <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+                        <span style="font-size:0.75rem;">5</span>
+                        <div style="width:100%; height:100px; background:linear-gradient(to top, #3949ab, #5c6bc0); border-radius:6px 6px 0 0;"></div>
+                        <span style="font-size:0.7rem; color:var(--text-secondary);">Jan</span>
+                    </div>
+                    <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+                        <span style="font-size:0.75rem;">8</span>
+                        <div style="width:100%; height:150px; background:linear-gradient(to top, #3949ab, #5c6bc0); border-radius:6px 6px 0 0;"></div>
+                        <span style="font-size:0.7rem; color:var(--text-secondary);">Feb</span>
+                    </div>
+                    <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+                        <span style="font-size:0.75rem;">3</span>
+                        <div style="width:100%; height:60px; background:linear-gradient(to top, #3949ab, #5c6bc0); border-radius:6px 6px 0 0;"></div>
+                        <span style="font-size:0.7rem; color:var(--text-secondary);">Mar</span>
+                    </div>
+                    <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+                        <span style="font-size:0.75rem;">6</span>
+                        <div style="width:100%; height:120px; background:linear-gradient(to top, #3949ab, #5c6bc0); border-radius:6px 6px 0 0;"></div>
+                        <span style="font-size:0.7rem; color:var(--text-secondary);">Apr</span>
+                    </div>
+                    <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+                        <span style="font-size:0.75rem;">7</span>
+                        <div style="width:100%; height:140px; background:linear-gradient(to top, #3949ab, #5c6bc0); border-radius:6px 6px 0 0;"></div>
+                        <span style="font-size:0.7rem; color:var(--text-secondary);">May</span>
+                    </div>
+                    <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+                        <span style="font-size:0.75rem;">4</span>
+                        <div style="width:100%; height:80px; background:linear-gradient(to top, #3949ab, #5c6bc0); border-radius:6px 6px 0 0;"></div>
+                        <span style="font-size:0.7rem; color:var(--text-secondary);">Jun</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check auth
+            if (!isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const user = getCurrentUser();
+            if (!user || user.user_type !== 'admin') {
+                showAlert('Access denied. Admin privileges required.', 'error');
+                setTimeout(() => window.location.href = 'student-dashboard.html', 2000);
+                return;
+            }
+            
+            loadReportData();
+            setupDownloadReport();
+            setupLogout();
+        });
+        
+        async function loadReportData() {
+            try {
+                const complaints = await apiGetComplaints({ page: 1 });
+                const results = complaints.results || [];
+                
+                // Update stats with real data
+                const total = complaints.count || results.length;
+                const resolved = results.filter(c => c.status === 'resolved').length;
+                const pending = results.filter(c => c.status === 'pending').length;
+                const inProgress = results.filter(c => c.status === 'in_progress').length;
+                
+                document.querySelectorAll('.stats-cards .stat-card h3')[0].textContent = total;
+                document.querySelectorAll('.stats-cards .stat-card h3')[1].textContent = resolved;
+                document.querySelectorAll('.stats-cards .stat-card h3')[2].textContent = pending + inProgress;
+                
+                // Build category chart
+                const categories = {};
+                results.forEach(c => {
+                    categories[c.category] = (categories[c.category] || 0) + 1;
+                });
+                
+                const categoryChart = document.getElementById('categoryChart');
+                if (categoryChart && Object.keys(categories).length > 0) {
+                    const maxCount = Math.max(...Object.values(categories));
+                    const colors = ['#3949ab', '#ff6d00', '#43a047', '#8e24aa', '#e53935', '#00acc1', '#fdd835'];
+                    
+                    categoryChart.innerHTML = `
+                        <div style="padding:20px;">
+                            <div style="display:flex; gap:20px; align-items:flex-end; height:200px; padding:0 10px;">
+                                ${Object.entries(categories).map(([cat, count], i) => `
+                                    <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px;">
+                                        <span style="font-size:0.85rem; font-weight:600;">${count}</span>
+                                        <div style="width:100%; height:${Math.max((count/maxCount)*150, 20)}px; background:${colors[i % colors.length]}; border-radius:8px 8px 0 0; transition:all 0.5s ease;"></div>
+                                        <span style="font-size:0.75rem; color:var(--text-secondary); text-align:center;">${cat}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading report data:', error);
+            }
+        }
+        
+        function setupDownloadReport() {
+            const downloadBtn = document.getElementById('downloadReportBtn');
+            if (!downloadBtn) return;
+            
+            downloadBtn.addEventListener('click', async function() {
+                try {
+                    const complaints = await apiGetComplaints({ page: 1 });
+                    const results = complaints.results || [];
+                    
+                    // Build CSV content
+                    let csv = 'ID,Title,Category,Status,Priority,Student,Date\n';
+                    results.forEach(c => {
+                        const row = [
+                            c.id_number,
+                            `"${c.title.replace(/"/g, '""')}"`,
+                            c.category,
+                            c.status,
+                            c.priority,
+                            c.student?.username || 'Unknown',
+                            c.created_at
+                        ].join(',');
+                        csv += row + '\n';
+                    });
+                    
+                    // Create download
+                    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = `complaint-report-${new Date().toISOString().split('T')[0]}.csv`;
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                    
+                    showAlert('Report downloaded successfully!', 'success');
+                } catch (error) {
+                    showAlert('Failed to download report', 'error');
+                }
+            });
+        }
+        
+        function setupLogout() {
+            document.querySelectorAll('.logout-link').forEach(link => {
+                link.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to logout?')) {
+                        try { await apiLogout(); } catch (error) {}
+                        clearAuthToken();
+                        window.location.href = 'login.html';
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students - University Complaint Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt"></i>
+            <div><h3>ComplaintPortal</h3><span>Admin Panel</span></div>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">AD</div>
+            <div class="sidebar-user-info">
+                <h4>Admin User</h4>
+                <span>Administrator</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Main</div>
+            <a href="admin-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="admin-complaints.html"><i class="fas fa-list"></i><span>All Complaints</span><span class="badge-sidebar">8</span></a>
+            <a href="reports.html"><i class="fas fa-chart-bar"></i><span>Reports</span></a>
+            <div class="nav-section">Management</div>
+            <a href="manage-students.html" class="active"><i class="fas fa-users"></i><span>Manage Students</span></a>
+            <a href="profile.html"><i class="fas fa-user-cog"></i><span>Profile Settings</span></a>
+            <a href="#"><i class="fas fa-bell"></i><span>Notifications</span></a>
+            <a href="admin-settings.html"><i class="fas fa-cog"></i><span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <div class="top-header">
+            <h1>Manage Students</h1>
+            <div class="top-header-right">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="studentSearchInput" placeholder="Search students by name or email...">
+                </div>
+                <div class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <h3 id="totalStudents">0</h3>
+                    <p>Total Students</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-user-check"></i></div>
+                <div class="stat-info">
+                    <h3 id="activeStudents">0</h3>
+                    <p>Active Students</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-file-alt"></i></div>
+                <div class="stat-info">
+                    <h3 id="totalComplaintsFromStudents">0</h3>
+                    <p>Total Complaints</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <h3 id="pendingComplaintsFromStudents">0</h3>
+                    <p>Pending Complaints</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Students Table -->
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                <h3><i class="fas fa-user-graduate" style="margin-right:8px; color:var(--primary-light);"></i> Registered Students</h3>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-sm btn-secondary" onclick="filterStudents('all')" id="filterAllBtn"><i class="fas fa-list"></i> All</button>
+                    <button class="btn btn-sm btn-secondary" onclick="filterStudents('student')" id="filterStudentsBtn"><i class="fas fa-user-graduate"></i> Students</button>
+                    <button class="btn btn-sm btn-secondary" onclick="filterStudents('admin')" id="filterAdminsBtn"><i class="fas fa-user-shield"></i> Admins</button>
+                </div>
+            </div>
+            <div class="dashboard-card-body">
+                <table class="data-table" id="studentsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            <th>Type</th>
+                            <th>Student ID</th>
+                            <th>Phone</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check auth
+            if (!isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // RBAC: Only admins can access this page
+            const user = getCurrentUser();
+            if (!user || user.user_type !== 'admin') {
+                showAlert('Access denied. Admin privileges required.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'student-dashboard.html';
+                }, 2000);
+                return;
+            }
+            
+            loadStudents();
+            setupSearch();
+            setupLogout();
+        });
+        
+        let allUsers = [];
+        let currentFilter = 'all';
+        
+        async function loadStudents() {
+            try {
+                const users = await apiGetUsers();
+                allUsers = users;
+                renderStudents(users);
+                updateStats(users);
+            } catch (error) {
+                showAlert('Failed to load students', 'error');
+            }
+        }
+        
+        function renderStudents(users) {
+            const tbody = document.querySelector('#studentsTable tbody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td><span class="complaint-id">${u.id}</span></td>
+                    <td>${u.username}</td>
+                    <td>${u.email}</td>
+                    <td>${(u.first_name || '') + (u.last_name ? ' ' + u.last_name : '') || '-'}</td>
+                    <td><span class="badge ${u.user_type === 'admin' ? 'badge-resolved' : 'badge-pending'}">${u.user_type}</span></td>
+                    <td>${u.student_id || '-'}</td>
+                    <td>${u.phone_number || '-'}</td>
+                    <td>${formatDate(u.date_joined)}</td>
+                    <td><span class="badge ${u.is_verified ? 'badge-resolved' : 'badge-pending'}">${u.is_verified ? 'Verified' : 'Pending'}</span></td>
+                </tr>
+            `).join('') || '<tr><td colspan="9" style="text-align:center; padding:30px; color:var(--text-secondary);">No users found</td></tr>';
+        }
+        
+        function updateStats(users) {
+            const students = users.filter(u => u.user_type === 'student');
+            document.getElementById('totalStudents').textContent = students.length;
+            document.getElementById('activeStudents').textContent = students.filter(u => u.is_verified || true).length;
+            
+            // Get total complaints count
+            apiGetComplaints({ page: 1 }).then(complaints => {
+                document.getElementById('totalComplaintsFromStudents').textContent = complaints.count || 0;
+                document.getElementById('pendingComplaintsFromStudents').textContent = 
+                    (complaints.results || []).filter(c => c.status === 'pending').length;
+            }).catch(() => {});
+        }
+        
+        function filterStudents(type) {
+            currentFilter = type;
+            
+            // Update button styles
+            document.querySelectorAll('.dashboard-card-header .btn').forEach(btn => btn.classList.remove('btn-primary'));
+            document.querySelectorAll('.dashboard-card-header .btn').forEach(btn => btn.classList.add('btn-secondary'));
+            
+            if (type === 'all') {
+                document.getElementById('filterAllBtn').classList.remove('btn-secondary');
+                document.getElementById('filterAllBtn').classList.add('btn-primary');
+                renderStudents(allUsers);
+            } else if (type === 'student') {
+                document.getElementById('filterStudentsBtn').classList.remove('btn-secondary');
+                document.getElementById('filterStudentsBtn').classList.add('btn-primary');
+                renderStudents(allUsers.filter(u => u.user_type === 'student'));
+            } else if (type === 'admin') {
+                document.getElementById('filterAdminsBtn').classList.remove('btn-secondary');
+                document.getElementById('filterAdminsBtn').classList.add('btn-primary');
+                renderStudents(allUsers.filter(u => u.user_type === 'admin'));
+            }
+        }
+        
+        function setupSearch() {
+            const searchInput = document.getElementById('studentSearchInput');
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                if (!query) {
+                    filterStudents(currentFilter);
+                    return;
+                }
+                
+                const filtered = allUsers.filter(u => 
+                    u.username.toLowerCase().includes(query) ||
+                    u.email.toLowerCase().includes(query) ||
+                    (u.first_name || '').toLowerCase().includes(query) ||
+                    (u.last_name || '').toLowerCase().includes(query) ||
+                    (u.student_id || '').toLowerCase().includes(query)
+                );
+                renderStudents(filtered);
+            });
+        }
+        
+        function setupLogout() {
+            document.querySelectorAll('.logout-link').forEach(link => {
+                link.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    if (confirm('Are you sure you want to logout?')) {
+                        try {
+                            await apiLogout();
+                        } catch (error) {}
+                        clearAuthToken();
+                        window.location.href = 'login.html';
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

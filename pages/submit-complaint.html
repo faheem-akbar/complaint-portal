@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint - University Complaint Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt"></i>
+            <div><h3>ComplaintPortal</h3><span>Student Panel</span></div>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">FK</div>
+            <div class="sidebar-user-info">
+                <h4>Faheem Akbar</h4>
+                <span>Student - CS2024</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Main</div>
+            <a href="student-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="submit-complaint.html" class="active"><i class="fas fa-plus-circle"></i><span>New Complaint</span></a>
+            <a href="student-dashboard.html"><i class="fas fa-list"></i><span>My Complaints</span><span class="badge-sidebar">8</span></a>
+            <div class="nav-section">Account</div>
+            <a href="profile.html"><i class="fas fa-user-cog"></i><span>Profile Settings</span></a>
+            <a href="#"><i class="fas fa-bell"></i><span>Notifications</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <div class="top-header">
+            <h1>Submit a Complaint</h1>
+            <div class="top-header-right">
+                <div class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Wizard -->
+        <div class="dashboard-card" style="max-width: 900px; margin: 0 auto;">
+            <div class="dashboard-card-header">
+                <h3><i class="fas fa-file-alt" style="margin-right:8px; color:var(--primary-light);"></i> New Complaint Form</h3>
+            </div>
+            <div class="dashboard-card-body">
+                <div class="form-wizard">
+                <!-- Steps -->
+            <div class="wizard-steps">
+                <div class="wizard-step active">
+                    <span class="step-circle">1</span>
+                    <span>Category & Title</span>
+                </div>
+                <div class="wizard-step">
+                    <span class="step-circle">2</span>
+                    <span>Description</span>
+                </div>
+                <div class="wizard-step">
+                    <span class="step-circle">3</span>
+                    <span>Attachments</span>
+                </div>
+            </div>
+
+            <!-- Step Content -->
+            <div class="wizard-content">
+                <!-- Step 1 -->
+                <div class="wizard-step-content active">
+                <div class="form-group">
+                    <label>Complaint Category</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-tag"></i>
+                        <select id="complaintCategory" required style="width: 100%;">
+                                <option value="">Select a category</option>
+                                <option value="academic">Academic</option>
+                                <option value="hostel">Hostel</option>
+                                <option value="administrative">Administrative</option>
+                                <option value="financial">Financial</option>
+                                <option value="examination">Examination</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <label>Complaint Title</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-heading"></i>
+                        <input type="text" id="complaintTitle" placeholder="e.g., Library timing issue" required style="width: 100%;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Priority Level</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <select id="complaintPriority" style="width: 100%;">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <label>Location (Optional)</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-location-dot"></i>
+                        <input type="text" id="complaintLocation" placeholder="e.g., Block A, Room 201" style="width: 100%;">
+                    </div>
+                </div>
+                    <div class="wizard-buttons">
+                        <div></div>
+                        <button type="button" class="btn btn-primary btn-next"><i class="fas fa-arrow-right"></i> Next Step</button>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="wizard-step-content">
+                    <div class="form-group">
+                        <label>Detailed Description</label>
+                        <div class="input-wrapper" style="align-items: flex-start;">
+                            <i class="fas fa-align-left" style="top:16px;"></i>
+                            <textarea id="complaintDescription" placeholder="Describe your complaint in detail. Include relevant dates, names, and any other information that might help us resolve your issue faster." style="min-height:180px; padding-left:42px; width: 100%;" required></textarea>
+                        </div>
+                    </div>
+                    <div class="wizard-buttons">
+                        <button type="button" class="btn btn-secondary btn-prev"><i class="fas fa-arrow-left"></i> Previous</button>
+                        <button type="button" class="btn btn-primary btn-next"><i class="fas fa-arrow-right"></i> Next Step</button>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="wizard-step-content">
+                    <div class="form-group">
+                        <label>Supporting Documents (Optional)</label>
+                        <div class="file-upload-area">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4>Drag & drop files here</h4>
+                            <p>or click to browse. Supported: PDF, JPG, PNG, DOC (Max: 5MB)</p>
+                        </div>
+                        <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" style="display:none;">
+                        <div class="file-list"></div>
+                    </div>
+                    <div class="wizard-buttons">
+                        <button type="button" class="btn btn-secondary btn-prev"><i class="fas fa-arrow-left"></i> Previous</button>
+                        <button type="button" id="submitComplaint" class="btn btn-success"><i class="fas fa-paper-plane"></i> Submit Complaint</button>
+                    </div>
+                </div>
+            </div>
+                </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/complaint.js"></script>
+    <script>
+        // RBAC: Redirect non-student users away from submit complaint page
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (!user) {
+                window.location.href = 'login.html';
+            } else if (user.user_type !== 'student') {
+                showAlert('Access denied. Only students can submit complaints.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - University Complaint Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt"></i>
+            <div>
+                <h3>ComplaintPortal</h3>
+                <span>Student Panel</span>
+            </div>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">FK</div>
+            <div class="sidebar-user-info">
+                <h4>Faheem Akbar</h4>
+                <span>Student - CS2024</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Main</div>
+            <a href="student-dashboard.html" class="active">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="submit-complaint.html">
+                <i class="fas fa-plus-circle"></i>
+                <span>New Complaint</span>
+            </a>
+            <a href="student-dashboard.html">
+                <i class="fas fa-list"></i>
+                <span>My Complaints</span>
+                <span class="badge-sidebar">8</span>
+            </a>
+            <div class="nav-section">Account</div>
+            <a href="profile.html">
+                <i class="fas fa-user-cog"></i>
+                <span>Profile Settings</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-link">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <div class="top-header">
+            <h1>Student Dashboard</h1>
+            <div class="top-header-right">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search complaints...">
+                </div>
+                <div class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-file-alt"></i></div>
+                <div class="stat-info">
+                    <h3 id="totalComplaints">0</h3>
+                    <p>Total Complaints</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <h3 id="pendingComplaints">0</h3>
+                    <p>Pending</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-spinner"></i></div>
+                <div class="stat-info">
+                    <h3 id="inProgressComplaints">0</h3>
+                    <p>In Progress</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3 id="resolvedComplaints">0</h3>
+                    <p>Resolved</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Recent Complaints -->
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <h3><i class="fas fa-list" style="margin-right:8px; color:var(--primary-light);"></i> Recent Complaints</h3>
+                    <a href="submit-complaint.html">+ New Complaint</a>
+                </div>
+                <div class="dashboard-card-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <h3><i class="fas fa-bolt" style="margin-right:8px; color:var(--warning);"></i> Recent Activity</h3>
+                </div>
+                <div class="dashboard-card-body">
+                    <div class="activity-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <a href="submit-complaint.html" style="position:fixed; bottom:30px; right:30px; width:60px; height:60px; background:linear-gradient(135deg, var(--primary), var(--primary-light)); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 4px 20px rgba(26,35,126,0.4); transition:all 0.3s ease; z-index:50;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <i class="fas fa-plus"></i>
+        </a>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        // RBAC: Redirect non-student users away from student dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = getCurrentUser();
+            if (!user) {
+                window.location.href = 'login.html';
+            } else if (user.user_type !== 'student') {
+                showAlert('Access denied. Student privileges required.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

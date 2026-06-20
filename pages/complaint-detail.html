@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Detail - University Complaint Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt"></i>
+            <div><h3>ComplaintPortal</h3><span>Student Panel</span></div>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">US</div>
+            <div class="sidebar-user-info">
+                <h4>Loading...</h4>
+                <span>Student</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Main</div>
+            <a href="student-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="submit-complaint.html"><i class="fas fa-plus-circle"></i><span>New Complaint</span></a>
+            <a href="student-dashboard.html"><i class="fas fa-list"></i><span>My Complaints</span><span class="badge-sidebar">8</span></a>
+            <div class="nav-section">Account</div>
+            <a href="#"><i class="fas fa-user-cog"></i><span>Profile Settings</span></a>
+            <a href="#"><i class="fas fa-bell"></i><span>Notifications</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <div class="top-header">
+            <h1>Complaint Details</h1>
+            <div class="top-header-right">
+                <a href="student-dashboard.html" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            </div>
+        </div>
+
+        <div class="complaint-detail-container">
+            <!-- Header (Populated by JS) -->
+            <div class="complaint-detail-header">
+                <div>
+                    <h2>Loading...</h2>
+                    <span class="badge badge-pending">--</span>
+                </div>
+                <div class="complaint-meta">
+                    <span>ID: --</span>
+                    <span>Submitted: --</span>
+                </div>
+            </div>
+
+            <!-- Info Grid (Populated by JS) -->
+            <div class="complaint-info-grid">
+                <div class="card" style="grid-column: 1 / -1; text-align: center;">
+                    <p style="color: var(--text-secondary);">Loading complaint details...</p>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="dashboard-card" style="margin-bottom:24px;">
+                <div class="dashboard-card-header">
+                    <h3><i class="fas fa-road" style="margin-right:8px; color:var(--secondary);"></i> Status Timeline</h3>
+                </div>
+                <div class="dashboard-card-body" style="padding:24px;">
+                    <div class="timeline">
+                        <p style="color: var(--text-secondary); text-align: center;">Loading timeline...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Responses (Populated by JS) -->
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <h3><i class="fas fa-reply" style="margin-right:8px; color:var(--primary-light);"></i> Admin Responses</h3>
+                </div>
+                <div class="dashboard-card-body" style="padding:24px;">
+                    <div class="complaint-responses">
+                        <p style="color: var(--text-secondary); text-align: center;">No responses yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/complaint.js"></script>
+</body>
+</html>

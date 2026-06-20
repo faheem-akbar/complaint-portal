@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Complaints - University Complaint Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt"></i>
+            <div><h3>ComplaintPortal</h3><span>Admin Panel</span></div>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">AD</div>
+            <div class="sidebar-user-info">
+                <h4>Admin User</h4>
+                <span>Administrator</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-section">Main</div>
+            <a href="admin-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+            <a href="admin-complaints.html" class="active"><i class="fas fa-list"></i><span>All Complaints</span><span class="badge-sidebar">8</span></a>
+            <a href="reports.html"><i class="fas fa-chart-bar"></i><span>Reports</span></a>
+            <div class="nav-section">Management</div>
+            <a href="manage-students.html"><i class="fas fa-users"></i><span>Manage Students</span></a>
+            <a href="profile.html"><i class="fas fa-user-cog"></i><span>Profile Settings</span></a>
+            <a href="#"><i class="fas fa-bell"></i><span>Notifications</span></a>
+            <a href="admin-settings.html"><i class="fas fa-cog"></i><span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <div class="top-header">
+            <h1>All Complaints</h1>
+            <div class="top-header-right">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search complaints...">
+                </div>
+                <div class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <select id="filterStatus">
+                <option value="">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+            <select id="filterCategory">
+                <option value="">All Categories</option>
+                <option value="academic">Academic</option>
+                <option value="hostel">Hostel</option>
+                <option value="administrative">Administrative</option>
+                <option value="financial">Financial</option>
+            </select>
+            <select id="filterPriority">
+                <option value="">All Priority</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <input type="text" id="filterSearch" placeholder="Search by ID or title...">
+            <button class="btn btn-primary btn-sm"><i class="fas fa-filter"></i> Apply Filters</button>
+            <button class="btn btn-secondary btn-sm"><i class="fas fa-undo"></i> Clear</button>
+        </div>
+
+        <!-- Complaints Table -->
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                <h3><i class="fas fa-list" style="margin-right:8px; color:var(--primary-light);"></i> All Complaints</h3>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-sm btn-secondary" id="selectAllBtn"><i class="fas fa-check-square"></i> Select All</button>
+                    <button class="btn btn-sm btn-secondary" id="bulkActionBtn"><i class="fas fa-tasks"></i> Bulk Action</button>
+                </div>
+            </div>
+            <div class="dashboard-card-body">
+                <table class="data-table" id="adminComplaintsTable">
+                    <thead>
+                        <tr>
+                            <th style="width:40px;"><input type="checkbox" id="selectAllCheckbox"></th>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">&raquo;</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/admin.js"></script>
+</body>
+</html>
