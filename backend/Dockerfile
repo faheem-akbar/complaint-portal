@@ -27,4 +27,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Run migrations and start gunicorn
-CMD ["sh", "-c", "python manage.py migrate && gunicorn complaint_portal.wsgi --bind 0.0.0.0:8000 --log-file -"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn complaint_portal.wsgi --bind 0.0.0.0:${PORT:-8000} --log-file - --access-logfile - --error-logfile -"]

@@ -1,1 +1,1 @@
-web: gunicorn complaint_portal.wsgi --log-file - --access-logfile - --error-logfile -
+web: gunicorn complaint_portal.wsgi --bind 0.0.0.0:$PORT --log-file - --access-logfile - --error-logfile -
