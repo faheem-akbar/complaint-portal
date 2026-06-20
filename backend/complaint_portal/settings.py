@@ -8,17 +8,30 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Auto-detect Railway's injected public domain
+RAILWAY_PUBLIC_DOMAIN = os.environ.get('RAILWAY_PUBLIC_DOMAIN', '')
+RAILWAY_STATIC_URL = os.environ.get('RAILWAY_STATIC_URL', '')
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-here-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+_allowed_hosts_default = 'localhost,127.0.0.1'
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
-    default='localhost,127.0.0.1',
+    default=_allowed_hosts_default,
     cast=lambda v: [s.strip() for s in v.split(',')]
 )
+
+# Always include Railway's auto-assigned domain so Django accepts requests
+if RAILWAY_PUBLIC_DOMAIN and RAILWAY_PUBLIC_DOMAIN not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)
+if RAILWAY_STATIC_URL and RAILWAY_STATIC_URL not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RAILWAY_STATIC_URL)
+# Fallback wildcard for Railway preview/PR deployments
+ALLOWED_HOSTS += ['.railway.app', '.up.railway.app']
 
 # Trust Railway/Netlify HTTPS proxy headers
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -159,8 +172,10 @@ CORS_ALLOWED_ORIGINS = config(
 )
 
 CORS_ALLOW_CREDENTIALS = False
-# Only allow all origins in local dev (when DEBUG is True)
-CORS_ALLOW_ALL_ORIGINS = DEBUG
+# Default True so registration/login works immediately after deploy.
+# Set CORS_ALLOW_ALL_ORIGINS=False in Railway Variables once you know your Netlify URL,
+# and set CORS_ALLOWED_ORIGINS to your exact Netlify URL instead.
+CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=True, cast=bool)
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
