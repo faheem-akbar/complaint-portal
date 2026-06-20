@@ -2,7 +2,7 @@
 
 // ⚠️ After deploying to Railway, replace the PRODUCTION_API_URL below
 // with your actual Railway app URL, e.g. https://your-app.railway.app/api
-const PRODUCTION_API_URL = 'complaints-portal.up.railway.app/api';
+const PRODUCTION_API_URL = 'https://complaints-portal.up.railway.app/api';
 const LOCAL_API_URL = 'http://127.0.0.1:8000/api';
 
 const isLocalDev = (
@@ -18,7 +18,7 @@ function handleFetchError(error, endpoint) {
     console.error(`API Error (${endpoint}):`, error);
     if (error.message === 'Failed to fetch') {
         return {
-            message: `Cannot reach backend server at http://127.0.0.1:8000. Make sure it's running. (endpoint: ${endpoint})`,
+            message: `Cannot reach backend server at ${API_URL}. Make sure it's running. (endpoint: ${endpoint})`,
             originalError: error
         };
     }
