@@ -2,7 +2,7 @@
 
 // ⚠️ After deploying to Railway, replace the PRODUCTION_API_URL below
 // with your actual Railway app URL, e.g. https://your-app.railway.app/api
-const PRODUCTION_API_URL = 'https://YOUR-RAILWAY-APP.railway.app/api';
+const PRODUCTION_API_URL = 'complaints-portal.up.railway.app/api';
 const LOCAL_API_URL = 'http://127.0.0.1:8000/api';
 
 const isLocalDev = (
